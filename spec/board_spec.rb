@@ -8,8 +8,16 @@ describe Board do
   describe '#valid_move?' do
     context 'when the board is empty' do
       subject(:empty_board) { described_class.new }
+
         it 'returns true for empty first column' do
           expect(empty_board.valid_move?).to be true
+        end
+      end
+    context 'when the board is full' do
+      subject(:full_board) { described_class.new }
+
+        it 'returns false' do
+          expect(full_board.valid_move?).to be false
         end
       end
     end
