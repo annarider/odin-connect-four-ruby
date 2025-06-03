@@ -6,11 +6,13 @@ Let's plan and outline the project before writing code.
 We're doing this TDD!
 
 # main.rb 
-Purpose: Execution 
+Purpose: Entry point and game-loop management
 - Creates a new Game
-- Sets up game loop and repeat play if player chooses y 
-
+- Sets up game loop and repeat play if player chooses y
+- Handles high-level exceptions  
 Instance variables: None
+Instance method: 
+- play
 
 # Game class
 Purpose: Controller. Active orchestrator for game flow
@@ -35,13 +37,15 @@ Instance methods:
 # Player class
 Purpose: Creates a new player and symbol
 Instance variables: 
+- @name
+- @symbol
 Instance methods:
 - Sets the player name
 - Sets the player symbol 
 
 # IO class
 Purpose: Controls IO for players
-Instance variables: 
+Instance variables: None
 Instance methods: 
 - Request player name
 - Get's player column input
