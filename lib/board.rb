@@ -18,12 +18,14 @@ class Board
   COLUMNS = 7
 
   def initialize(rows = ROWS, columns = COLUMNS)
-    @board = Array.new(rows) { Array.new(columns)}
+    @board = Array.new(rows) { Array.new(columns) }
   end
 
   def valid_move?(column)
     return false unless column.between?(0, COLUMNS - 1)
 
+    return false unless board[0][column].nil? # check top row
+    
     true
   end
 end

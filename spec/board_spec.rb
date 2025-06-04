@@ -24,5 +24,18 @@ describe Board do
         expect(empty_board.valid_move?(10)).to be false
       end
     end
+
+    context 'when the board is full' do
+      subject(:full_board) { described_class.new }
+
+      before do
+        board = full_board.instance_variable_get(:@board)
+        6.times { |row| board[row][0] = 'X' }
+      end
+
+      it 'returns false for adding another piece' do
+        expect(full_board.valid_move?(0)).to be false
+      end
+    end
   end
 end
