@@ -54,12 +54,15 @@ describe Board do
         5.downto(1) { |row| board[row][2] = %w[X O].sample }
         5.downto(2) { |row| board[row][3] = %w[X O].sample }
         5.downto(4) { |row| board[row][4] = %w[X O].sample }
-        5.downto(1) { |row| board[row][5] = %w[X O].sample }
+        5.downto(0) { |row| board[row][5] = %w[X O].sample }
         5.downto(4) { |row| board[row][6] = %w[X O].sample }
       end
 
       it 'returns true for adding another piece in first column' do
         expect(partially_full_board.valid_move?(1)).to be true
+      end
+      it 'returns false for adding a piece in full column' do
+        expect(partially_full_board.valid_move?(5)).to be false
       end
     end
   end
