@@ -22,6 +22,8 @@ class Board
   end
 
   def valid_move?(column)
+    return false unless column.between?(0, COLUMNS - 1)
+
     true
   end
 end

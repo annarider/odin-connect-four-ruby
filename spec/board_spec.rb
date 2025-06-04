@@ -17,6 +17,9 @@ describe Board do
         it 'returns true for dropping into first column' do
           expect(empty_board.valid_move?(0)).to be true
         end
+        it 'returns false for invalid column -1' do
+          expect(empty_board.valid_move?(-1)).to be false
+        end
       end
   end
 end
