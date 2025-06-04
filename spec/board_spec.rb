@@ -43,5 +43,24 @@ describe Board do
         expect(full_board.valid_move?(0)).to be false
       end
     end
+
+    context 'when the board is partially full' do
+      subject(:partially_full_board) { described_class.new }
+
+      before do
+        board = partially_full_board.instance_variable_get(:@board)
+        5.downto(3) { |row| board[row][0] = %w[X O].sample }
+        5.downto(4) { |row| board[row][1] = %w[X O].sample }
+        5.downto(1) { |row| board[row][2] = %w[X O].sample }
+        5.downto(2) { |row| board[row][3] = %w[X O].sample }
+        5.downto(4) { |row| board[row][4] = %w[X O].sample }
+        5.downto(1) { |row| board[row][5] = %w[X O].sample }
+        5.downto(4) { |row| board[row][6] = %w[X O].sample }
+      end
+
+      it 'returns true for adding another piece in first column' do
+        expect(partially_full_board.valid_move?(1)).to be true
+      end
+    end
   end
 end
