@@ -74,7 +74,7 @@ describe Board do
       subject(:empty_board) { described_class.new }
 
       it 'places the piece at the bottom row' do
-        expect(empty_board.drop_piece(0, 'X')).to change { empty_board.board[0][0] }.from(nil).to('X')
+        expect { empty_board.drop_piece(0, 'X') }.to change { empty_board.board[bottom_row][0] }.from(nil).to('X')
       end
     end
   end

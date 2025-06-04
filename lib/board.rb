@@ -30,6 +30,6 @@ class Board
   end
 
   def drop_piece(column, symbol)
-    board[0][column] = 'X'
+    board[5][column] = 'X'
   end
 end
