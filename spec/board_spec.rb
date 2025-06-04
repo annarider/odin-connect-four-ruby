@@ -17,11 +17,17 @@ describe Board do
       it 'returns true for dropping into first column' do
         expect(empty_board.valid_move?(0)).to be true
       end
+      it 'returns true for end column 6' do
+        expect(empty_board.valid_move?(6)).to be true
+      end
       it 'returns false for invalid column -1' do
         expect(empty_board.valid_move?(-1)).to be false
       end
       it 'returns false for invalid column 10' do
         expect(empty_board.valid_move?(10)).to be false
+      end
+      it 'returns false for invalid column 7' do
+        expect(empty_board.valid_move?(7)).to be false
       end
     end
 
