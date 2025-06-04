@@ -25,7 +25,11 @@ class Board
     return false unless column.between?(0, COLUMNS - 1)
 
     return false unless board[0][column].nil? # check top row
-    
+
     true
+  end
+
+  def drop_piece(column, symbol)
+    board[0][column] = 'X'
   end
 end
