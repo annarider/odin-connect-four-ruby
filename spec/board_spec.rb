@@ -20,6 +20,9 @@ describe Board do
         it 'returns false for invalid column -1' do
           expect(empty_board.valid_move?(-1)).to be false
         end
+        it 'returns false for invalid column 10' do
+          expect(empty_board.valid_move?(10)).to be false
+        end
       end
   end
 end
