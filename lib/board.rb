@@ -21,7 +21,7 @@ class Board
     @board = Array.new(rows) { Array.new(columns)}
   end
 
-  def valid_move?
+  def valid_move?(column)
     true
   end
 end

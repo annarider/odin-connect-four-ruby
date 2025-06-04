@@ -9,12 +9,13 @@ describe Board do
     board = Board.new
     expect(board).to be_a(Board)
   end
+
   describe '#valid_move?' do
     context 'when the board is empty' do
       subject(:empty_board) { described_class.new }
 
-        it 'returns true for empty first column' do
-          expect(empty_board.valid_move?).to be true
+        it 'returns true for dropping into first column' do
+          expect(empty_board.valid_move?(0)).to be true
         end
       end
   end
