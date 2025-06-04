@@ -77,5 +77,20 @@ describe Board do
         expect { empty_board.drop_piece(0, 'X') }.to change { empty_board.board[bottom_row][0] }.from(nil).to('X')
       end
     end
+    context 'when the board is full' do
+      subject(:full_board) { described_class.new }
+
+      before do
+        board = full_board.board
+        6.times do |row|
+          7.times { |column| board[row][column] = 'X' }
+        end
+
+      end
+
+      it 'throws an error when adding another piece' do
+        expect { full_board.drop_piece(0, 'X') }.to raise_error(ArgumentError)
+      end
+    end
   end
 end

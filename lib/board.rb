@@ -30,6 +30,8 @@ class Board
   end
 
   def drop_piece(column, symbol)
+    raise ArgumentError, 'Invalid move' unless valid_move?(column)
+
     board[5][column] = 'X'
   end
 end
