@@ -93,5 +93,13 @@ describe Board do
         expect(result).to be_nil
       end
     end
+    context 'when the board is full of X pieces' do
+      
+      it 'returns the piece X' do
+        result = full_board.piece_at(0, 0) do
+        expect(result).to eq('X')
+        end
+      end
+    end
   end
 end
