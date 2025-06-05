@@ -14,8 +14,8 @@ describe Board do
   let(:partially_full_board) do 
     board = described_class.new
     board.board[bottom_row][0] = 'X' # add 1 piece
-    bottom_row.downto(4) { |row| board.board[row][1] = %w[X O].sample } # add 2 pieces
-    bottom_row.downto(0) { |row| board.board[row][2] = %w[X O].sample } # fill column
+    bottom_row.downto(4) { |row| board.board[row][1] = 'X' } # add 2 pieces
+    bottom_row.downto(0) { |row| board.board[row][2] = 'O' } # fill column
     board
   end
   let(:top_row) { 0 }
@@ -99,6 +99,12 @@ describe Board do
         result = full_board.piece_at(0, 0) do
         expect(result).to eq('X')
         end
+      end
+    end
+    context 'when the board is partially full with X and O pieces' do
+      
+      it 'returns O when looking at a position with an O piece' do
+        expect(partially_full_board.piece_at(5, 2)).to eq('O')
       end
     end
   end
