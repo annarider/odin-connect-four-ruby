@@ -107,5 +107,11 @@ describe Board do
         expect(partially_full_board.piece_at(5, 2)).to eq('O')
       end
     end
+    context 'when the position is invalid' do
+      
+      it 'raises an error' do
+        expect { empty_board.piece_at(-1, 0) }.to raise_error(ArgumentError)
+      end
+    end
   end
 end

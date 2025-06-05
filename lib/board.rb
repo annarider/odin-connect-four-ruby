@@ -40,6 +40,13 @@ class Board
   end
 
   def piece_at(row, column)
+    raise ArgumentError, 'Invalid position' unless valid_position?(row, column)
     board[row][column]
+  end
+
+  private
+
+  def valid_position?(row, column)
+    row.between?(0, ROWS - 1) && column.between?(0, COLUMNS - 1)
   end
 end
