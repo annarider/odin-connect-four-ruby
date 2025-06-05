@@ -31,7 +31,11 @@ class Board
 
   def drop_piece(column, symbol)
     raise ArgumentError, 'Invalid move' unless valid_move?(column)
-
-    board[5][column] = 'X'
+    (ROWS - 1).downto(0) do |row|
+      if board[row][column].nil?
+        board[row][column] = symbol 
+        return
+      end
+    end
   end
 end

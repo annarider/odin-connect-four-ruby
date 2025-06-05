@@ -92,5 +92,16 @@ describe Board do
         expect { full_board.drop_piece(0, 'X') }.to raise_error(ArgumentError)
       end
     end
+    context 'when the column is partially full' do
+      subject(:partially_full_board) { described_class.new }
+
+      before do
+        partially_full_board.board[bottom_row][0] = 'O'
+      end
+
+      it 'stacks a game piece on top of an existing piece' do
+        expect {partially_full_board.drop_piece(0, 'X') }.to change { partially_full_board.board[bottom_row - 1][0] }.from(nil).to('X')
+      end
+    end
   end
 end
