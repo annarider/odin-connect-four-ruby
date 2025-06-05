@@ -5,8 +5,22 @@ require_relative '../lib/board'
 # Tests for the Connect Four Board class
 
 describe Board do
+  let(:empty_board) { described_class.new }
+  let(:full_board) do
+    board = described_class.new
+    6.times { |row| 7.times { |column| board.board[row][column] = 'X' } }
+    board
+    end
+  let(:partially_full_board) do 
+    board = described_class.new
+    board.board[bottom_row][0] = 'X' # add 1 piece
+    bottom_row.downto(4) { |row| board.board[row][1] = %w[X O].sample } # add 2 pieces
+    bottom_row.downto(0) { |row| board.board[row][2] = %w[X O].sample } # fill column
+    board
+  end
   let(:top_row) { 0 }
   let(:bottom_row) { 5 }
+
   it 'creates a new board' do
     board = Board.new
     expect(board).to be_a(Board)
@@ -14,7 +28,6 @@ describe Board do
 
   describe '#valid_move?' do
     context 'when the board is empty' do
-      subject(:empty_board) { described_class.new }
 
       it 'returns true for dropping into first column' do
         expect(empty_board.valid_move?(0)).to be true
@@ -34,12 +47,6 @@ describe Board do
     end
 
     context 'when the board is full' do
-      subject(:full_board) { described_class.new }
-
-      before do
-        board = full_board.instance_variable_get(:@board)
-        6.times { |row| board[row][0] = 'X' }
-      end
 
       it 'returns false for adding another piece' do
         expect(full_board.valid_move?(0)).to be false
@@ -47,57 +54,30 @@ describe Board do
     end
 
     context 'when the board is partially full' do
-      subject(:partially_full_board) { described_class.new }
-
-      before do
-        board = partially_full_board.instance_variable_get(:@board)
-        bottom_row.downto(3) { |row| board[row][0] = %w[X O].sample }
-        bottom_row.downto(4) { |row| board[row][1] = %w[X O].sample }
-        bottom_row.downto(1) { |row| board[row][2] = %w[X O].sample }
-        bottom_row.downto(2) { |row| board[row][3] = %w[X O].sample }
-        bottom_row.downto(4) { |row| board[row][4] = %w[X O].sample }
-        bottom_row.downto(0) { |row| board[row][5] = %w[X O].sample }
-        bottom_row.downto(4) { |row| board[row][6] = %w[X O].sample }
-      end
 
       it 'returns true for adding another piece in first column' do
         expect(partially_full_board.valid_move?(1)).to be true
       end
       it 'returns false for adding a piece in full column' do
-        expect(partially_full_board.valid_move?(5)).to be false
+        expect(partially_full_board.valid_move?(2)).to be false
       end
     end
   end
 
   describe '#drop_piece' do
     context 'when the board is empty' do
-      subject(:empty_board) { described_class.new }
 
       it 'places the piece at the bottom row' do
         expect { empty_board.drop_piece(0, 'X') }.to change { empty_board.board[bottom_row][0] }.from(nil).to('X')
       end
     end
     context 'when the board is full' do
-      subject(:full_board) { described_class.new }
-
-      before do
-        board = full_board.board
-        6.times do |row|
-          7.times { |column| board[row][column] = 'X' }
-        end
-
-      end
 
       it 'throws an error when adding another piece' do
         expect { full_board.drop_piece(0, 'X') }.to raise_error(ArgumentError)
       end
     end
     context 'when the column is partially full' do
-      subject(:partially_full_board) { described_class.new }
-
-      before do
-        partially_full_board.board[bottom_row][0] = 'O'
-      end
 
       it 'stacks a game piece on top of an existing piece' do
         expect {partially_full_board.drop_piece(0, 'X') }.to change { partially_full_board.board[bottom_row - 1][0] }.from(nil).to('X')
