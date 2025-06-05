@@ -84,4 +84,14 @@ describe Board do
       end
     end
   end
+
+  describe '#piece_at' do
+    context 'when the board is empty' do
+      
+      it "returns nil because there's no piece" do
+        result = empty_board.piece_at(0, 0)
+        expect(result).to be_nil
+      end
+    end
+  end
 end

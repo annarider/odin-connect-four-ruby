@@ -38,4 +38,8 @@ class Board
       end
     end
   end
+
+  def piece_at(row, column)
+    board[row][column]
+  end
 end
