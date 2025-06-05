@@ -22,11 +22,7 @@ class Board
   end
 
   def valid_move?(column)
-    return false unless column.between?(0, COLUMNS - 1)
-
-    return false unless board[0][column].nil? # check top row
-
-    true
+    valid_column?(column) && board[0][column].nil? # check top row
   end
 
   def drop_piece(column, symbol)
@@ -46,7 +42,15 @@ class Board
 
   private
 
+  def valid_column?(column)
+    column.between?(0, COLUMNS - 1)
+  end
+
   def valid_position?(row, column)
-    row.between?(0, ROWS - 1) && column.between?(0, COLUMNS - 1)
+    valid_row?(row) && valid_column?(column) 
+  end
+
+  def valid_row?(row)
+    row.between?(0, ROWS - 1)
   end
 end
