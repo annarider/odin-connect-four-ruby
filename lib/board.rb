@@ -40,6 +40,10 @@ class Board
     board[row][column]
   end
 
+  def game_over?
+    winner? || full?
+  end
+
   private
 
   def valid_column?(column)
@@ -52,5 +56,13 @@ class Board
 
   def valid_row?(row)
     row.between?(0, ROWS - 1)
+  end
+
+  def winner?
+    false
+  end
+
+  def full?
+    board.all? { |row| row.none?(&:nil?) }
   end
 end

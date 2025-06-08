@@ -10,7 +10,7 @@ describe Board do
     board = described_class.new
     6.times { |row| 7.times { |column| board.board[row][column] = 'X' } }
     board
-    end
+  end
   let(:partially_full_board) do 
     board = described_class.new
     board.board[bottom_row][0] = 'X' # add 1 piece
@@ -111,6 +111,21 @@ describe Board do
       
       it 'raises an error' do
         expect { empty_board.piece_at(-1, 0) }.to raise_error(ArgumentError)
+      end
+    end
+  end
+
+  describe '#game_over?' do
+    context 'when the board is empty' do
+      
+      it 'returns false' do
+        expect(empty_board.game_over?).to be false
+      end
+    end
+    context 'when the board is full of X pieces' do
+      
+      it 'returns true' do
+        expect(full_board.game_over?).to be true
       end
     end
   end
