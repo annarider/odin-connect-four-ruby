@@ -59,16 +59,41 @@ class Board
   end
 
   def winner?(row, column)
-    combination = []
-    if row + 3 < ROWS - 1
-      row.upto(row + 3) { |row_index| combination << board[row_index][column] unless board[row_index][column].nil? }
-    elsif column + 3 < COLUMNS - 1
-      column.upto(column + 3) { |column_index| combination << board[row][column_index] unless board[row][column].nil?}
-    end
-    combination.uniq.size == 1
-  end
+    piece = board[row][column]
+    return false if piece.nil?
 
+    horizontal_win?(row, column, piece) || vertical_win?(row, column, piece)
+  end
+  
   def full?
     board.all? { |row| row.none?(&:nil?) }
+  end
+  
+  def horizontal_win?(row, column, piece)
+    line = build_line(row, column, 0, 1)
+    four_in_a_row?(line, piece)
+  end
+
+  def vertical_win?(row, column, piece)
+    line = build_line(row, column, 1, 0)
+    four_in_a_row?(line, piece)
+  end
+  
+  def build_line(row, column, row_delta, column_delta)
+    line = []
+    (-3..3).each do |index| 
+      transformed_row = row + (index * row_delta)
+      transformed_column = column + (index * column_delta)
+      if valid_position?(transformed_row, transformed_column) 
+        line << board[transformed_row][transformed_column]
+      else 
+        line << nil
+      end
+    end
+    line
+  end
+  
+  def four_in_a_row?(line, piece)
+    line.each_cons(4).any? { |combo| combo.all? { |symbol| symbol == piece} }
   end
 end

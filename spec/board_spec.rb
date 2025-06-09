@@ -122,19 +122,19 @@ describe Board do
         expect(empty_board.game_over?(bottom_row, 0)).to be false
       end
     end
-    context 'when the board is full of X pieces' do
+    context 'when the board is full of X pieces (win in all directions)' do
       
       it 'returns true' do
         expect(full_board.game_over?(top_row, 2)).to be true
       end
     end
-    context 'when the board is partially full with a winning column' do
+    context 'when the board has a vertical win' do
       
       it 'returns true' do
         expect(partially_full_board.game_over?(top_row, 2)).to be true
       end
     end
-    context 'when the board has a winning row' do
+    context 'when the board has a horizontal win' do
       let(:board) { empty_board }
       before do
         4.times { |index| board.board[bottom_row][index] = 'X' }
