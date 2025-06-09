@@ -60,9 +60,9 @@ class Board
 
   def winner?(row, column)
     combination = []
-    if row + 4 < ROWS - 1
+    if row + 3 < ROWS - 1
       row.upto(row + 3) { |row_index| combination << board[row_index][column] unless board[row_index][column].nil? }
-    elsif column + 4 < COLUMNS - 1
+    elsif column + 3 < COLUMNS - 1
       column.upto(column + 3) { |column_index| combination << board[row][column_index] unless board[row][column].nil?}
     end
     combination.uniq.size == 1
