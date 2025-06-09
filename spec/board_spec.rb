@@ -153,6 +153,16 @@ describe Board do
       it 'returns true' do
         expect(board.game_over?(top_row, 4)).to be true
       end
-    end 
+    end
+    context 'when the board has a diagonal lower left win' do
+      let(:board) { empty_board }
+      before do
+        (0..3).each { |index| board.board[bottom_row - index][index] = 'O' }
+      end
+
+      it 'returns true' do
+        expect(board.game_over?(3, 2)).to be true
+      end
+    end
   end
 end
