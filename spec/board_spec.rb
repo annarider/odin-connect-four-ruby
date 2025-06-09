@@ -134,7 +134,7 @@ describe Board do
         expect(partially_full_board.game_over?(top_row, 2)).to be true
       end
     end
-    context 'when the board has a horizontal win' do
+    context 'when the board has a horizontal win from bottom row, first column' do
       let(:board) { empty_board }
       before do
         4.times { |index| board.board[bottom_row][index] = 'X' }
@@ -144,6 +144,15 @@ describe Board do
         expect(board.game_over?(bottom_row, 0)).to be true
       end
     end
+    context 'when the board has a horizontal win from top row, last column' do
+      let(:board) { empty_board }
+      before do
+        (1..4).each { |index| board.board[top_row][index] = 'X' }
+      end
 
+      it 'returns true' do
+        expect(board.game_over?(top_row, 4)).to be true
+      end
+    end 
   end
 end
