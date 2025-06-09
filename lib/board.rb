@@ -40,8 +40,8 @@ class Board
     board[row][column]
   end
 
-  def game_over?
-    winner? || full?
+  def game_over?(row, column)
+    winner?(row, column) || full?
   end
 
   private
@@ -58,8 +58,12 @@ class Board
     row.between?(0, ROWS - 1)
   end
 
-  def winner?
-    false
+  def winner?(row, column)
+    combination = []
+    if row + 4 < ROWS - 1
+      row.upto(row + 3) { |row_delta| combination << board[row_delta][column] } 
+    end
+    combination.uniq.size == 1
   end
 
   def full?

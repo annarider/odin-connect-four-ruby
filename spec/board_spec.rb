@@ -119,13 +119,19 @@ describe Board do
     context 'when the board is empty' do
       
       it 'returns false' do
-        expect(empty_board.game_over?).to be false
+        expect(empty_board.game_over?(bottom_row, 0)).to be false
       end
     end
     context 'when the board is full of X pieces' do
       
       it 'returns true' do
-        expect(full_board.game_over?).to be true
+        expect(full_board.game_over?(top_row, 2)).to be true
+      end
+    end
+    context 'when the board is partially full with a winning column' do
+      
+      it 'returns true' do
+        expect(partially_full_board.game_over?(top_row, 2)).to be true
       end
     end
   end
