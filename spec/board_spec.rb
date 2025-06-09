@@ -134,5 +134,16 @@ describe Board do
         expect(partially_full_board.game_over?(top_row, 2)).to be true
       end
     end
+    context 'when the board has a winning row' do
+      let(:board) { empty_board }
+      before do
+        4.times { |index| board.board[bottom_row][index] = 'X' }
+      end
+
+      it 'returns true' do
+        expect(board.game_over?(bottom_row, 0)).to be true
+      end
+    end
+
   end
 end
