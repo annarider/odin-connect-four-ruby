@@ -87,17 +87,11 @@ class Board
   end
   
   def build_line(row, column, row_delta, column_delta)
-    line = []
-    (-3..3).each do |index| 
+    (-3..3).map do |index| 
       transformed_row = row + (index * row_delta)
       transformed_column = column + (index * column_delta)
-      if valid_position?(transformed_row, transformed_column) 
-        line << board[transformed_row][transformed_column]
-      else 
-        line << nil
-      end
+      valid_position?(transformed_row, transformed_column) ? board[transformed_row][transformed_column] : nil
     end
-    line
   end
   
   def four_in_a_row?(line, piece)
