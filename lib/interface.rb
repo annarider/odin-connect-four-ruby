@@ -1,15 +1,17 @@
 # frozen_string_literal: true
 
 # Interface defines a game IO
-# class in Connect Four.
+# module in Connect Four.
 # 
 # It displays messages to the
 # user and receives input for
 # game play. It also verifies 
 # and cleanses user input.
 #
-# @example Create a new Interface
-# interface = Interface.new
-#
-class Interface
+module Interface
+  def self.request_name
+    puts "What's your name?"
+    name = gets.chomp
+    name
+  end
 end
