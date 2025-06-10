@@ -18,6 +18,15 @@ describe Board do
     bottom_row.downto(0) { |row| board.board[row][2] = 'O' } # fill column
     board
   end
+  let(:stalemate_board) do
+    board = described_class.new
+    board.board = board.board.map.with_index do |row, row_index|
+      row.map.with_index do |column, column_index|
+        (row_index + column_index).even? ? 'O' : 'X' 
+      end
+    end
+    board
+  end
   let(:top_row) { 0 }
   let(:bottom_row) { 5 }
 
@@ -116,63 +125,71 @@ describe Board do
   end
 
   describe '#game_over?' do
-    context 'when the board is empty' do
+    context 'scenarios where game_over? is true' do
+      context 'when the board is full of X pieces (win in all directions)' do
+        
+        it 'returns true' do
+          expect(full_board.game_over?(top_row, 2)).to be true
+        end
+      end
+      context 'when the board has a vertical win' do
+        
+        it 'returns true' do
+          expect(partially_full_board.game_over?(top_row, 2)).to be true
+        end
+      end
+      context 'when the board has a horizontal win from bottom row, first column' do
+        let(:board) { empty_board }
+        before do
+          4.times { |index| board.board[bottom_row][index] = 'X' }
+        end
 
-      it 'returns false' do
-        expect(empty_board.game_over?(bottom_row, 0)).to be false
+        it 'returns true' do
+          expect(board.game_over?(bottom_row, 0)).to be true
+        end
       end
-    end
-    context 'when the board is full of X pieces (win in all directions)' do
-      
-      it 'returns true' do
-        expect(full_board.game_over?(top_row, 2)).to be true
-      end
-    end
-    context 'when the board has a vertical win' do
-      
-      it 'returns true' do
-        expect(partially_full_board.game_over?(top_row, 2)).to be true
-      end
-    end
-    context 'when the board has a horizontal win from bottom row, first column' do
-      let(:board) { empty_board }
-      before do
-        4.times { |index| board.board[bottom_row][index] = 'X' }
-      end
+      context 'when the board has a horizontal win from top row, last column' do
+        let(:board) { empty_board }
+        before do
+          (1..4).each { |index| board.board[top_row][index] = 'X' }
+        end
 
-      it 'returns true' do
-        expect(board.game_over?(bottom_row, 0)).to be true
+        it 'returns true' do
+          expect(board.game_over?(top_row, 4)).to be true
+        end
+      end
+      context 'when the board has a diagonal lower left win' do
+        let(:board) { empty_board }
+        before do
+          (0..3).each { |index| board.board[bottom_row - index][index] = 'O' }
+        end
+
+        it 'returns true' do
+          expect(board.game_over?(3, 2)).to be true
+        end
+      end
+      context 'when the board has a diagonal lower right win' do
+        let(:board) { empty_board }
+        before do
+          (0..3).each { |index| board.board[2 + index][3 + index] = 'X' }
+        end
+
+        it 'returns true' do
+          expect(board.game_over?(2, 3)).to be true
+        end
+      end
+      context 'when the board is full and a stalemate' do
+        it 'returns true' do
+          expect(stalemate_board.game_over?(top_row, 0)).to be true
+        end
       end
     end
-    context 'when the board has a horizontal win from top row, last column' do
-      let(:board) { empty_board }
-      before do
-        (1..4).each { |index| board.board[top_row][index] = 'X' }
-      end
+    context 'scenarios where game_over? is false' do
+      context 'when the board is empty' do
 
-      it 'returns true' do
-        expect(board.game_over?(top_row, 4)).to be true
-      end
-    end
-    context 'when the board has a diagonal lower left win' do
-      let(:board) { empty_board }
-      before do
-        (0..3).each { |index| board.board[bottom_row - index][index] = 'O' }
-      end
-
-      it 'returns true' do
-        expect(board.game_over?(3, 2)).to be true
-      end
-    end
-  
-    context 'when the board has a diagonal lower right win' do
-      let(:board) { empty_board }
-      before do
-        (0..3).each { |index| board.board[2 + index][3 + index] = 'X' }
-      end
-
-      it 'returns true' do
-        expect(board.game_over?(2, 3)).to be true
+        it 'returns false' do
+          expect(empty_board.game_over?(bottom_row, 0)).to be false
+        end
       end
     end
   end
