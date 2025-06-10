@@ -64,7 +64,8 @@ class Board
 
     horizontal_win?(row, column, piece) ||
     vertical_win?(row, column, piece)   ||
-    diagonal_left_down_win?(row, column, piece)
+    diagonal_left_down_win?(row, column, piece) ||
+    diagonal_right_down_win?(row, column, piece)
   end
   
   def full?
@@ -83,6 +84,11 @@ class Board
 
   def diagonal_left_down_win?(row, column, piece)
     line = build_line(row, column, -1, 1)
+    four_in_a_row?(line, piece)
+  end
+
+  def diagonal_right_down_win?(row, column, piece)
+    line = build_line(row, column, 1, 1)
     four_in_a_row?(line, piece)
   end
   

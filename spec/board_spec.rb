@@ -117,7 +117,7 @@ describe Board do
 
   describe '#game_over?' do
     context 'when the board is empty' do
-      
+
       it 'returns false' do
         expect(empty_board.game_over?(bottom_row, 0)).to be false
       end
@@ -162,6 +162,17 @@ describe Board do
 
       it 'returns true' do
         expect(board.game_over?(3, 2)).to be true
+      end
+    end
+  
+    context 'when the board has a diagonal lower right win' do
+      let(:board) { empty_board }
+      before do
+        (0..3).each { |index| board.board[2 + index][3 + index] = 'X' }
+      end
+
+      it 'returns true' do
+        expect(board.game_over?(2, 3)).to be true
       end
     end
   end
