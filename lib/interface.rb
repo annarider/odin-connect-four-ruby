@@ -14,4 +14,8 @@ module Interface
     name = gets.chomp
     name
   end
+
+  def self.show_board(board)
+    puts board
+  end
 end
