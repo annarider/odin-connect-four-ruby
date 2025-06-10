@@ -191,6 +191,19 @@ describe Board do
           expect(empty_board.game_over?(bottom_row, 0)).to be false
         end
       end
+      context 'when the board is partially full without a winner' do
+        let(:no_winner_board) do
+          no_winner_board = described_class.new
+          no_winner_board.board[bottom_row][0] = 'X'
+          no_winner_board.board[bottom_row][1] = 'O'
+          no_winner_board.board[bottom_row][2] = 'O'
+          no_winner_board
+        end
+
+        it 'returns false' do
+          expect(no_winner_board.game_over?(bottom_row, 2)).to be false
+        end
+      end
     end
   end
 end
