@@ -19,14 +19,27 @@ describe Interface do
   describe '.request_column' do
     context 'when the player chooses a column to drop a piece into' do
       context 'when the chosen column is between 0 and 6' do
-        let(:valid_column) { "3" }
+        let(:valid_column) { '3' }
 
         before do
           allow(Interface).to receive(:gets).and_return(valid_column)
         end
         it 'returns the column number' do
           # Add this line right after your stub
-          expect(Interface.request_column).to eq(3)
+          expect(Interface.request_column).to eq(2)
+        end
+      end
+      context 'when the chosen column is invalid twice then valid' do
+        let(:letter) { 'd' }
+        let(:symbol) { '$' }
+        let(:valid_input) { '6' }
+
+        before do
+          allow(Interface).to receive(:gets).and_return(letter, symbol, valid_input)
+        end
+
+        it 'completes loop after two incorrect tries' do
+          expect(Interface.request_column).to eq(5)
         end
       end
     end
