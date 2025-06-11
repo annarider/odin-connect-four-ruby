@@ -18,4 +18,24 @@ module Interface
   def self.show_board(board)
     puts board
   end
+
+  def self.request_column
+    puts <<~MESSAGE
+      🔮 Which column do you want drop a piece into?
+      Pick from 0 to 6.
+    MESSAGE
+    column = gets.chomp.delete(' ').to_i
+    valid_input?(column) ? column : guess_again(column)
+  end
+
+  private
+
+  def self.valid_input?(input)
+    input.between?(0, 6)
+  end
+
+  def guess_again(input)
+    puts '❌ Invalid column number. Pick again between 0 and 6.'
+    request_column
+  end
 end

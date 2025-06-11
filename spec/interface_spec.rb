@@ -16,4 +16,19 @@ describe Interface do
     end
   end
 
+  describe '.request_column' do
+    context 'when the player chooses a column to drop a piece into' do
+      context 'when the chosen column is between 0 and 6' do
+        let(:valid_column) { "3" }
+
+        before do
+          allow(Interface).to receive(:gets).and_return(valid_column)
+        end
+        it 'returns the column number' do
+          # Add this line right after your stub
+          expect(Interface.request_column).to eq(3)
+        end
+      end
+    end
+  end
 end
