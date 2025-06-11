@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../lib/interface'
+require_relative '../lib/board'
 
 # Tests for the Connect Four Interface module
 
@@ -17,9 +18,11 @@ describe Interface do
 
   describe '.show_board' do
     context 'when the game starts and board is empty' do
+      let(:empty_board) { instance_double(Board, board: Array.new(6) {
+        Array.new(7, ' ')
+      }) }
       it 'shows board without errors' do
-        board = double('board')
-        expect {Interface.show_board(board) }.not_to raise_error
+        expect { Interface.show_board(empty_board) }.not_to raise_error
       end
     end
   end
