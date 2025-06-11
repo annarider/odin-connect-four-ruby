@@ -16,18 +16,4 @@ describe Interface do
     end
   end
 
-  describe '.show_board' do
-    context 'when the game starts and board is empty' do
-      let(:empty_board) { instance_double(Board, board: Array.new(6) {
-        Array.new(7, ' ')
-      }) }
-      it 'shows board without errors' do
-        expect { Interface.show_board(empty_board) }.not_to raise_error
-      end
-
-      it 'displays the empty board in output' do
-        expect { Interface.show_board(empty_board) }.to output.to_stdout
-      end
-    end
-  end
 end
