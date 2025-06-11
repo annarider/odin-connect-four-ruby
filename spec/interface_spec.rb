@@ -25,7 +25,6 @@ describe Interface do
           allow(Interface).to receive(:gets).and_return(valid_column)
         end
         it 'returns the column number' do
-          # Add this line right after your stub
           expect(Interface.request_column).to eq(2)
         end
       end
@@ -36,9 +35,12 @@ describe Interface do
 
         before do
           allow(Interface).to receive(:gets).and_return(letter, symbol, valid_input)
+          allow(Interface).to receive(:puts)
         end
 
         it 'completes loop after two incorrect tries' do
+          Interface.request_column
+          expect(Interface).to have_received(:puts).with(/Invalid/).twice
           expect(Interface.request_column).to eq(5)
         end
       end
