@@ -17,7 +17,17 @@ Instance method:
 # Game class
 Purpose: Controller. Active orchestrator for game flow
 Instance variables: 
+- player 1
+- player 2
+- game piece symbols
 Instance methods: 
+- create objects (board, players)
+- switch turns
+- check for game_over?
+- check for winner?
+- announce winner
+- announce end if no winner
+- display board
 
 # Board class
 Purpose: 
