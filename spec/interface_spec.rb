@@ -24,6 +24,10 @@ describe Interface do
       it 'shows board without errors' do
         expect { Interface.show_board(empty_board) }.not_to raise_error
       end
+
+      it 'displays the empty board in output' do
+        expect { Interface.show_board(empty_board) }.to output.to_stdout
+      end
     end
   end
 end
