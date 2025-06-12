@@ -22,8 +22,12 @@ class Game
   attr_accessor :players, :current_player_index
 
   def initialize
-    @players = [Player.new('Anna'), Player.new('Alex')]
     @current_player_index = 0
+  end
+  
+  def start
+    Interface.welcome
+    @players = Interface.greet_players
   end
 
   def current_player
@@ -37,4 +41,7 @@ class Game
       @current_player_index = 0
     end
   end
+
+  private
+  
 end
