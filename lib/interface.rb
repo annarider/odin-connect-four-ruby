@@ -9,6 +9,8 @@
 # and cleanses user input.
 #
 module Interface
+  COLORS = 'rbyp'
+
   def self.welcome
     puts <<~WELCOME
       🔴🔴🔴🔴 Welcome to Connect Four. You will pick a column to drop 
@@ -18,15 +20,15 @@ module Interface
   end
 
   def self.greet_players  
-    puts <<~GREET
-      Let's start by creating players. We need 2 players.
-      Let's start with Player 1.
-    GREET
-    player1 = request_name
+    puts "Let's start by creating players. We need 2 players."
+    puts "Let's start with Player 1."
+    player1_name = request_name
+    player1_symbol = request_symbol
     puts 'Next, Player 2.'
-    player2 = request_name
-    puts "Excellent. We have #{player1} and #{player2} ready."
-    [player1, player2]
+    player2_name = request_name
+    player2_symbol = request_symbol
+    puts "Excellent. We have #{player1_name} and #{player2_name} ready."
+    {player1_name => player1_symbol, player2_name => player2_symbol}
   end
   
   def self.show_board(board)
@@ -39,23 +41,54 @@ module Interface
       Pick from 1 to 7.
       MESSAGE
       column = gets.chomp.delete(' ').to_i
-      valid_input?(column) ? (column - 1) : guess_again(column)
+      valid_column?(column) ? (column - 1) : pick_column_again(column)
   end
     
-    private
+  private
   
-    def self.request_name
-      puts "What's your name?"
-      name = gets.chomp
-      name
+  def self.request_name
+    puts "What's your name?"
+    name = gets.chomp
+    name
+  end
+  
+  def self.valid_column?(input)
+    input.between?(1, 7)
+  end
+  
+  def self.request_symbol
+    puts "What color do you want? 🔴 🔵 🟡 🟣"
+    puts "Type #{COLORS.split.join(' ')}"
+    symbol = gets.chomp.delete(' ')
+    valid_color?(symbol) ? map_color(symbol) : pick_color_again(symbol)
+  end
+
+  def self.valid_color?(symbol)
+    return false unless symbol.length == 1
+      
+    COLORS.include?(symbol)
+  end
+
+  def self.map_color(symbol)
+    case symbol
+    when 'r'
+      '🔴'
+    when 'b'
+      '🔵'
+    when 'y'
+      '🟡'
+    else 
+      '🟣'  
     end
-    
-    def self.valid_input?(input)
-      input.between?(1, 7)
-    end
-    
-    def self.guess_again(input)
-      puts '❌ Invalid column number.'
-      request_column
-    end
+  end
+
+  def self.pick_color_again(input)
+    puts '❌ Invalid symbol color.'
+    request_symbol
+  end
+  
+  def self.pick_column_again(input)
+    puts '❌ Invalid column number.'
+    request_column
+  end
 end

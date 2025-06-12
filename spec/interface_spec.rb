@@ -8,9 +8,9 @@ require_relative '../lib/board'
 describe Interface do
   describe '.greet_players' do
     context 'when game greets the players' do
-      it "should request and return the players' names" do
-        allow(Interface).to receive(:gets).and_return('Anna', 'Alex')
-        expect(Interface.greet_players).to eq(['Anna', 'Alex'])
+      it "should request and return the players' info" do
+        allow(Interface).to receive(:gets).and_return('Anna', 'p', 'Alex', 'y')
+        expect(Interface.greet_players).to eq({'Anna' => '🟣', 'Alex' => '🟡'})
       end
     end
   end
