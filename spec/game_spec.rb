@@ -11,10 +11,11 @@ describe Game do
   describe '#start' do
     context 'when starting the game' do
       it 'it sends a welcome message and creates 2 players' do
+        player_data = {'Anna' => '🟣', 'Alex' => '🟡'}
         allow(Interface).to receive(:welcome)
-        allow(Interface).to receive(:greet_players)
+        allow(Interface).to receive(:request_players_data).and_return(player_data)
         expect(Interface).to receive(:welcome).ordered
-        expect(Interface).to receive(:greet_players).ordered
+        expect(Interface).to receive(:request_players_data).ordered
         running_game.start
       end
     end

@@ -19,7 +19,7 @@ module Interface
     WELCOME
   end
 
-  def self.greet_players  
+  def self.request_players_data  
     puts "Let's start by creating players. We need 2 players."
     puts "Let's start with Player 1."
     player1_name = request_name

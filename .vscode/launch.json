@@ -23,7 +23,7 @@
     "name": "Debug RSpec",
     "request": "launch",
     "command": "rspec",
-    "script": "${workspaceFolder}/spec/interface_spec.rb",
+    "script": "${workspaceFolder}/spec/game_spec.rb",
     "args": [],
     "askParameters": false
   }

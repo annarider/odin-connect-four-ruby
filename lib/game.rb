@@ -22,6 +22,7 @@ class Game
   attr_accessor :players, :current_player_index
 
   def initialize
+    @players = []
     @current_player_index = 0
   end
   
@@ -45,6 +46,8 @@ class Game
   private
   
   def create_players(players_data)
-    
+    players_data.each do |name, symbol|
+      players << Player.new(name, symbol)
+    end
   end
 end
