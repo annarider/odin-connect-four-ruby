@@ -6,7 +6,7 @@ require_relative '../lib/board'
 # Tests for the Connect Four Interface module
 
 describe Interface do
-  describe '.greet_players' do
+  describe '.request_players_data' do
     context 'when game greets the players' do
       it "should request and return the players' info" do
         allow(Interface).to receive(:gets).and_return('Anna', 'p', 'Alex', 'y')

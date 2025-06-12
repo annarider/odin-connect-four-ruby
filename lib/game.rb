@@ -27,7 +27,7 @@ class Game
   
   def start
     Interface.welcome
-    @players = Interface.greet_players
+    create_players(Interface.request_players_data)
   end
 
   def current_player
@@ -44,4 +44,7 @@ class Game
 
   private
   
+  def create_players(players_data)
+    
+  end
 end
