@@ -14,16 +14,6 @@ describe Interface do
       end
     end
   end
-  describe '.request_name' do
-    context 'when the game setup establishes players' do
-      it "accepts and returns the player's name" do
-        allow(Interface).to receive(:gets).and_return("Anna\n")
-        expect { Interface.request_name }.to output("What's your name?\n").to_stdout
-        expect(Interface.request_name).to eq('Anna')
-      end
-    end
-  end
-
   describe '.request_column' do
     context 'when the player chooses a column to drop a piece into' do
       context 'when the chosen column is between 0 and 6' do

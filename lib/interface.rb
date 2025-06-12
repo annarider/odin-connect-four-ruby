@@ -28,34 +28,34 @@ module Interface
     puts "Excellent. We have #{player1} and #{player2} ready."
     [player1, player2]
   end
-
-  def self.request_name
-    puts "What's your name?"
-    name = gets.chomp
-    name
-  end
-
+  
   def self.show_board(board)
     puts board
   end
-
+  
   def self.request_column
     puts <<~MESSAGE
-      🔮 Which column do you want drop a piece into?
+    🔮 Which column do you want drop a piece into?
       Pick from 1 to 7.
-    MESSAGE
-    column = gets.chomp.delete(' ').to_i
-    valid_input?(column) ? (column - 1) : guess_again(column)
+      MESSAGE
+      column = gets.chomp.delete(' ').to_i
+      valid_input?(column) ? (column - 1) : guess_again(column)
   end
-
-  private
-
-  def self.valid_input?(input)
-    input.between?(1, 7)
-  end
-
-  def self.guess_again(input)
-    puts '❌ Invalid column number.'
-    request_column
-  end
+    
+    private
+  
+    def self.request_name
+      puts "What's your name?"
+      name = gets.chomp
+      name
+    end
+    
+    def self.valid_input?(input)
+      input.between?(1, 7)
+    end
+    
+    def self.guess_again(input)
+      puts '❌ Invalid column number.'
+      request_column
+    end
 end
