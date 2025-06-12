@@ -29,4 +29,12 @@ class Game
   def current_player
     players[current_player_index]
   end
+
+  def switch_turns
+    if current_player_index == 0 
+      @current_player_index = 1
+    else
+      @current_player_index = 0
+    end
+  end
 end
