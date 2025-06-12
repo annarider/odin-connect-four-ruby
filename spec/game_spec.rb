@@ -6,7 +6,12 @@ require_relative '../lib/interface'
 # Tests for the Connect Four Game class
 
 describe Game do
-  let(:running_game) { Game.new }
+  let(:new_game) { Game.new }
+  let(:running_game) do 
+    game = Game.new
+    game.players = [Player.new('Anna', '🟣'), Player.new('Alex', '🟡')]
+    game
+  end
 
   describe '#start' do
     context 'when starting the game' do
@@ -16,7 +21,7 @@ describe Game do
         allow(Interface).to receive(:request_players_data).and_return(player_data)
         expect(Interface).to receive(:welcome).ordered
         expect(Interface).to receive(:request_players_data).ordered
-        running_game.start
+        new_game.start
       end
     end
   end

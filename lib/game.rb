@@ -32,7 +32,7 @@ class Game
   end
 
   def current_player
-    players[current_player_index]
+    @players[current_player_index]
   end
 
   def switch_turns
@@ -47,7 +47,7 @@ class Game
   
   def create_players(players_data)
     players_data.each do |name, symbol|
-      players << Player.new(name, symbol)
+      @players << Player.new(name, symbol)
     end
   end
 end
