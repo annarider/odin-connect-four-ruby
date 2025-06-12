@@ -6,6 +6,14 @@ require_relative '../lib/board'
 # Tests for the Connect Four Interface module
 
 describe Interface do
+  describe '.greet_players' do
+    context 'when game greets the players' do
+      it "should request and return the players' names" do
+        allow(Interface).to receive(:gets).and_return('Anna', 'Alex')
+        expect(Interface.greet_players).to eq(['Anna', 'Alex'])
+      end
+    end
+  end
   describe '.request_name' do
     context 'when the game setup establishes players' do
       it "accepts and returns the player's name" do

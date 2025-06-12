@@ -9,6 +9,26 @@
 # and cleanses user input.
 #
 module Interface
+  def self.welcome
+    puts <<~WELCOME
+      🔴🔴🔴🔴 Welcome to Connect Four. You will pick a column to drop 
+      game pieces into. The first person to reach 4 pieces-
+      horizontally, vertically, or diagonally-in a row wins. 
+    WELCOME
+  end
+
+  def self.greet_players  
+    puts <<~GREET
+      Let's start by creating players. We need 2 players.
+      Let's start with Player 1.
+    GREET
+    player1 = request_name
+    puts 'Next, Player 2.'
+    player2 = request_name
+    puts "Excellent. We have #{player1} and #{player2} ready."
+    [player1, player2]
+  end
+
   def self.request_name
     puts "What's your name?"
     name = gets.chomp
