@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative 'board'
 require_relative 'player'
 
 # Game defines a game object
@@ -19,20 +20,31 @@ require_relative 'player'
 # game = Game.new
 #
 class Game
-  attr_accessor :players, :current_player_index
+  attr_accessor :players, :current_player_index, :board
 
   def initialize
     @players = []
     @current_player_index = 0
+    @board = Board.new
   end
   
   def start
     Interface.welcome
     create_players(Interface.request_players_data)
+    Interface.show(board.grid)
   end
 
   def current_player
     @players[current_player_index]
+  end
+
+  def play_turn
+    current_player = players[current_player_index] 
+    Interface.announce_turn(current_player.name)
+    column = choose_column
+    board.drop_piece(column, current_player.symbol)
+    Interface.show(board.grid)
+    switch_turns
   end
 
   def switch_turns
@@ -49,5 +61,14 @@ class Game
     players_data.each do |name, symbol|
       @players << Player.new(name, symbol)
     end
+  end
+  
+  def choose_column
+    column_input = Interface.request_column
+    column_input - 1 # convert to 0-based array
+  end
+
+  def check_game_over
+    
   end
 end

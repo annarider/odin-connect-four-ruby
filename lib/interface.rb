@@ -31,8 +31,10 @@ module Interface
     {player1_name => player1_symbol, player2_name => player2_symbol}
   end
   
-  def self.show_board(board)
-    puts board
+  def self.show(grid)
+    grid.each do |row|
+      puts "| #{row.map { |cell| cell.nil? ? ' ' : map_color(cell) }.join(' ') } |"
+    end 
   end
   
   def self.announce_turn(name)
