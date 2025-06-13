@@ -35,6 +35,10 @@ module Interface
     puts board
   end
   
+  def self.announce_turn(name)
+    puts "#{name}, it's your turn."
+  end
+
   def self.request_column
     puts <<~MESSAGE
     🔮 Which column do you want drop a piece into?
@@ -60,7 +64,7 @@ module Interface
     puts "What color do you want? 🔴 🔵 🟡 🟣"
     puts "Type #{COLORS.split.join(' ')}"
     symbol = gets.chomp.delete(' ')
-    valid_color?(symbol) ? map_color(symbol) : pick_color_again(symbol)
+    valid_color?(symbol) ? symbol : pick_color_again(symbol)
   end
 
   def self.valid_color?(symbol)
