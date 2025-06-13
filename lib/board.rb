@@ -13,23 +13,23 @@
 # board = Board.new
 #
 class Board
-  attr_accessor :board
+  attr_accessor :grid
   ROWS = 6
   COLUMNS = 7
 
   def initialize(rows = ROWS, columns = COLUMNS)
-    @board = Array.new(rows) { Array.new(columns) }
+    @grid = Array.new(rows) { Array.new(columns) }
   end
 
   def valid_move?(column)
-    valid_column?(column) && board[0][column].nil? # check top row
+    valid_column?(column) && grid[0][column].nil? # check top row
   end
 
   def drop_piece(column, symbol)
     raise ArgumentError, 'Invalid move' unless valid_move?(column)
     (ROWS - 1).downto(0) do |row|
-      if board[row][column].nil?
-        board[row][column] = symbol 
+      if grid[row][column].nil?
+        grid[row][column] = symbol 
         return
       end
     end
@@ -37,7 +37,7 @@ class Board
 
   def piece_at(row, column)
     raise ArgumentError, 'Invalid position' unless valid_position?(row, column)
-    board[row][column]
+    grid[row][column]
   end
 
   def game_over?(row, column)
@@ -59,7 +59,7 @@ class Board
   end
 
   def winner?(row, column)
-    piece = board[row][column]
+    piece = grid[row][column]
     return false if piece.nil?
 
     horizontal_win?(row, column, piece) ||
@@ -69,7 +69,7 @@ class Board
   end
   
   def full?
-    board.all? { |row| row.none?(&:nil?) }
+    grid.all? { |row| row.none?(&:nil?) }
   end
   
   def horizontal_win?(row, column, piece)
@@ -96,7 +96,7 @@ class Board
     (-3..3).map do |index| 
       transformed_row = row + (index * row_delta)
       transformed_column = column + (index * column_delta)
-      valid_position?(transformed_row, transformed_column) ? board[transformed_row][transformed_column] : nil
+      valid_position?(transformed_row, transformed_column) ? grid[transformed_row][transformed_column] : nil
     end
   end
   
