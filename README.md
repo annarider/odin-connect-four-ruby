@@ -22,12 +22,15 @@ Instance variables:
 - game piece symbols
 Instance methods: 
 - create objects (board, players)
-- switch turns
-- check for game_over?
-- check for winner?
+- play a turn
+-- get player to choose a column
+-- drop a piece
+-- check for game_over?
+-- check for winner?
+-- display board
+-- switch turns
 - announce winner
 - announce end if no winner
-- display board
 
 # Board class
 Purpose: 
