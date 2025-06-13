@@ -41,7 +41,7 @@ module Interface
       Pick from 1 to 7.
       MESSAGE
       column = gets.chomp.delete(' ').to_i
-      valid_column?(column) ? (column - 1) : pick_column_again(column)
+      valid_column?(column) ? column : pick_column_again(column)
   end
     
   private

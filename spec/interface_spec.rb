@@ -10,7 +10,7 @@ describe Interface do
     context 'when game greets the players' do
       it "should request and return the players' info" do
         allow(Interface).to receive(:gets).and_return('Anna', 'p', 'Alex', 'y')
-        expect(Interface.greet_players).to eq({'Anna' => '🟣', 'Alex' => '🟡'})
+        expect(Interface.request_players_data).to eq({'Anna' => '🟣', 'Alex' => '🟡'})
       end
     end
   end
@@ -23,7 +23,7 @@ describe Interface do
           allow(Interface).to receive(:gets).and_return(valid_column)
         end
         it 'returns the column number' do
-          expect(Interface.request_column).to eq(2)
+          expect(Interface.request_column).to eq(3)
         end
       end
       context 'when the chosen column is invalid twice then valid' do
@@ -39,7 +39,7 @@ describe Interface do
         it 'completes loop after two incorrect tries' do
           Interface.request_column
           expect(Interface).to have_received(:puts).with(/Invalid/).twice
-          expect(Interface.request_column).to eq(5)
+          expect(Interface.request_column).to eq(6)
         end
       end
     end
