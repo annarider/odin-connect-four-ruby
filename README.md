@@ -11,8 +11,14 @@ Purpose: Entry point and game-loop management
 - Sets up game loop and repeat play if player chooses y
 - Handles high-level exceptions  
 Instance variables: None
-Instance method: 
-- play
+Instance method:
+- Scripted loop
+-- Create new game
+-- Start
+-- play_turn
+-- check_game_over
+- if game_over
+-- announce end
 
 # Game class
 Purpose: Controller. Active orchestrator for game flow
@@ -25,10 +31,11 @@ Instance methods:
 - play a turn
 -- get player to choose a column
 -- drop a piece
--- check for game_over?
--- check for winner?
 -- display board
 -- switch turns
+- check game over conditions
+-- check for game_over?
+-- check for winner?
 - announce winner
 - announce end if no winner
 
