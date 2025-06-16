@@ -7,7 +7,7 @@ require_relative '../lib/interface'
 
 describe Game do
   let(:new_game) { Game.new }
-  let(:running_game) do 
+  let(:running_game) do
     game = Game.new
     game.players = [Player.new('Anna', 'p'), Player.new('Alex', 'y')]
     game
@@ -16,7 +16,7 @@ describe Game do
   describe '#start' do
     context 'when starting the game' do
       it 'it sends a welcome message and creates 2 players' do
-        player_data = {'Anna' => 'p', 'Alex' => 'y'}
+        player_data = { 'Anna' => 'p', 'Alex' => 'y' }
         allow(Interface).to receive(:welcome)
         allow(Interface).to receive(:request_players_data).and_return(player_data)
         allow(Interface).to receive(:show)
@@ -33,7 +33,7 @@ describe Game do
         expect(running_game.current_player).to be_a(Player)
       end
     end
-  end  
+  end
   describe '#switch_turns' do
     context 'when the current player ends a turn' do
       it 'switches to the next player' do
@@ -42,12 +42,11 @@ describe Game do
         next_player = running_game.current_player
         expect(current_player).not_to eq(next_player)
       end
-    end 
+    end
   end
 
   describe '#play_turn' do
     context 'when the current player gets a turn' do
-      
       it 'orchestrates a full turn' do
         allow(Interface).to receive(:announce_turn)
         column_input = 1
@@ -55,7 +54,7 @@ describe Game do
         allow(running_game.board).to receive(:drop_piece)
         allow(Interface).to receive(:show)
         allow(running_game).to receive(:switch_turns)
-        
+
         running_game.play_turn
 
         expect(Interface).to have_received(:announce_turn).ordered
