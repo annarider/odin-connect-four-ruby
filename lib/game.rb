@@ -45,7 +45,7 @@ class Game
     board.drop_piece(column, current_player.symbol)
     Interface.show(board.grid)
     if game_over?(column)
-      handle_game_end(current_player.name)
+      handle_game_end(column, current_player.name)
     else
       switch_turns
     end
@@ -76,7 +76,19 @@ class Game
     column_input - 1 # convert to 0-based array
   end
 
-  def handle_game_end
-    
+  def handle_game_end(column, name)
+    if board.winner?(column)
+      announce_winner(name)
+    else
+      announce_end
+    end
+  end
+
+  def announce_winner(name)
+    puts "Game over! #{name} won."
+  end
+
+  def announce_end
+    puts 'Game over! Nobody won.'
   end
 end

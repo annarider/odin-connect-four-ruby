@@ -85,7 +85,7 @@ describe Game do
         expect(running_game.game_over?(0)).to be true
       end
       it 'announces game over and no winners' do
-        expect(running_game.send(:announce_end)).to eq('Game over! Nobody won.')
+        expect { running_game.send(:announce_end) }.to output("Game over! Nobody won.\n").to_stdout
       end
     end
     context 'when there is a winner on the board' do
@@ -96,8 +96,8 @@ describe Game do
         expect(running_game.game_over?(0)).to be true
       end
       it 'announces game over and the winner' do
-        running_game.instance_variable_set(:@current_player, '')
-        expect(running_game.send(:announce_winner)).to eq('Game over! Anna is the winner.') 
+        running_game.instance_variable_set(:@current_player, 'Anna')
+        expect { running_game.send(:announce_winner, 'Anna') }.to output("Game over! Anna won.\n").to_stdout 
       end
     end
   end
