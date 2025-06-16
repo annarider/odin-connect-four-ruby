@@ -42,8 +42,8 @@ class Game
   def play
     loop do
       column = play_turn
-      if game.end_game?(column)
-        game.handle_game_end(column, current_player.name)
+      if end_game?(column)
+        handle_game_end(column, current_player.name)
         break
       else
         switch_turns

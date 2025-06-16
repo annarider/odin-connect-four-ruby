@@ -33,7 +33,7 @@ module Interface
   
   def self.show(grid)
     grid.each do |row|
-      puts "| #{row.map { |cell| cell.nil? ? ' ' : map_color(cell) }.join(' ') } |"
+      puts "| #{row.map { |cell| cell.nil? ? '  ' : map_color(cell) }.join(' ') } |"
     end 
   end
   
@@ -64,7 +64,7 @@ module Interface
   
   def self.request_symbol
     puts "What color do you want? 🔴 🔵 🟡 🟣"
-    puts "Type #{COLORS.split.join(' ')}"
+    puts "Type #{COLORS.split.join('  ')}"
     symbol = gets.chomp.delete(' ')
     valid_color?(symbol) ? symbol : pick_color_again(symbol)
   end
