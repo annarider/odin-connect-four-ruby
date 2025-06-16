@@ -2,8 +2,8 @@
 
 # Board defines a game board
 # in Connect Four.
-# 
-# It manages the state and rules 
+#
+# It manages the state and rules
 # of the game, such as tracking
 # the position of the game pieces,
 # checking for game over conditions,
@@ -14,6 +14,7 @@
 #
 class Board
   attr_accessor :grid
+
   ROWS = 6
   COLUMNS = 7
 
@@ -27,16 +28,18 @@ class Board
 
   def drop_piece(column, symbol)
     raise ArgumentError, 'Invalid move' unless valid_move?(column)
+
     (ROWS - 1).downto(0) do |row|
       if grid[row][column].nil?
-        grid[row][column] = symbol 
-        return
+        grid[row][column] = symbol
+        break
       end
     end
   end
 
   def piece_at(row, column)
     raise ArgumentError, 'Invalid position' unless valid_position?(row, column)
+
     grid[row][column]
   end
 
@@ -53,7 +56,7 @@ class Board
 
     check_win_conditions(row, column, piece)
   end
-  
+
   private
 
   def valid_column?(column)
@@ -61,7 +64,7 @@ class Board
   end
 
   def valid_position?(row, column)
-    valid_row?(row) && valid_column?(column) 
+    valid_row?(row) && valid_column?(column)
   end
 
   def valid_row?(row)
@@ -70,15 +73,15 @@ class Board
 
   def check_win_conditions(row, column, piece)
     horizontal_win?(row, column, piece) ||
-    vertical_win?(row, column, piece)   ||
-    diagonal_left_down_win?(row, column, piece) ||
-    diagonal_right_down_win?(row, column, piece)    
+      vertical_win?(row, column, piece) ||
+      diagonal_left_down_win?(row, column, piece) ||
+      diagonal_right_down_win?(row, column, piece)
   end
 
   def full?
     grid.all? { |row| row.none?(&:nil?) }
   end
-  
+
   def find_highest_piece_row(column)
     grid.each_with_index do |row, row_index|
       return row_index unless row[column].nil?
@@ -111,16 +114,16 @@ class Board
     line = build_line(row, column, 1, 1)
     four_in_a_row?(line, piece)
   end
-  
+
   def build_line(row, column, row_delta, column_delta)
-    (-3..3).map do |index| 
+    (-3..3).map do |index|
       transformed_row = row + (index * row_delta)
       transformed_column = column + (index * column_delta)
       valid_position?(transformed_row, transformed_column) ? grid[transformed_row][transformed_column] : nil
     end
   end
-  
+
   def four_in_a_row?(line, piece)
-    line.each_cons(4).any? { |combo| combo.all? { |symbol| symbol == piece} }
+    line.each_cons(4).any? { |combo| combo.all? { |symbol| symbol == piece } }
   end
 end
