@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'board'
+require_relative 'interface'
 require_relative 'player'
 
 # Game defines a game object
@@ -44,25 +45,20 @@ class Game
     column = choose_column
     board.drop_piece(column, current_player.symbol)
     Interface.show(board.grid)
-    if game_over?(column)
-      handle_game_end(column, current_player.name)
-    else
-      switch_turns
-    end
-  end
-  
-  def game_over?(column)
-    board.game_over?(column)
-  end
+  end  
 
+  def end_game?(column)
+    board.game_over?(column)
+  end  
+  
   def switch_turns
     if current_player_index == 0 
       @current_player_index = 1
     else
       @current_player_index = 0
-    end
-  end
-
+    end  
+  end  
+  
   private
   
   def create_players(players_data)
