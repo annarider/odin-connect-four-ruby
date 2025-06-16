@@ -45,7 +45,7 @@ class Game
     board.drop_piece(column, current_player.symbol)
     Interface.show(board.grid)
     if game_over?(column)
-      nil
+      handle_game_end(current_player.name)
     else
       switch_turns
     end
@@ -74,5 +74,9 @@ class Game
   def choose_column
     column_input = Interface.request_column
     column_input - 1 # convert to 0-based array
+  end
+
+  def handle_game_end
+    
   end
 end

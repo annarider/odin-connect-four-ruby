@@ -44,6 +44,16 @@ class Board
     winner?(column) || full?
   end
 
+  def winner?(column)
+    row = find_highest_piece_row(column)
+    return false unless row && valid_row?(row)
+
+    piece = grid[row][column]
+    return false if piece.nil?
+
+    check_win_conditions(row, column, piece)
+  end
+  
   private
 
   def valid_column?(column)
@@ -58,19 +68,13 @@ class Board
     row.between?(0, ROWS - 1)
   end
 
-  def winner?(column)
-    row = find_highest_piece_row(column)
-    return false unless row && valid_row?(row)
-
-    piece = grid[row][column]
-    return false if piece.nil?
-
+  def check_win_conditions(row, column, piece)
     horizontal_win?(row, column, piece) ||
     vertical_win?(row, column, piece)   ||
     diagonal_left_down_win?(row, column, piece) ||
-    diagonal_right_down_win?(row, column, piece)
+    diagonal_right_down_win?(row, column, piece)    
   end
-  
+
   def full?
     grid.all? { |row| row.none?(&:nil?) }
   end

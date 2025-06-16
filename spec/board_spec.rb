@@ -8,21 +8,21 @@ describe Board do
   let(:empty_board) { described_class.new }
   let(:full_board) do
     board = described_class.new
-    6.times { |row| 7.times { |column| board.grid[row][column] = 'X' } }
+    6.times { |row| 7.times { |column| board.grid[row][column] = 'p' } }
     board
   end
   let(:partially_full_board) do 
     board = described_class.new
-    board.grid[bottom_row][0] = 'X' # add 1 piece
-    bottom_row.downto(4) { |row| board.grid[row][1] = 'X' } # add 2 pieces
-    bottom_row.downto(2) { |row| board.grid[row][2] = 'O' } # fill column
+    board.grid[bottom_row][0] = 'p' # add 1 piece
+    bottom_row.downto(4) { |row| board.grid[row][1] = 'p' } # add 2 pieces
+    bottom_row.downto(2) { |row| board.grid[row][2] = 'y' } # fill column
     board
   end
   let(:stalemate_board) do
     board = described_class.new
     board.grid = board.grid.map.with_index do |row, row_index|
       row.map.with_index do |column, column_index|
-        (row_index + column_index).even? ? 'O' : 'X' 
+        (row_index + column_index).even? ? 'y' : 'p' 
       end
     end
     board
@@ -66,7 +66,7 @@ describe Board do
 
       let(:full_column_board) do 
         board = described_class.new 
-        bottom_row.downto(0) { |row| board.grid[row][2] = 'O' }
+        bottom_row.downto(0) { |row| board.grid[row][2] = 'y' }
         board
       end
       it 'returns true for adding another piece in first column' do
@@ -82,19 +82,19 @@ describe Board do
     context 'when the board is empty' do
 
       it 'places the piece at the bottom row' do
-        expect { empty_board.drop_piece(0, 'X') }.to change { empty_board.grid[bottom_row][0] }.from(nil).to('X')
+        expect { empty_board.drop_piece(0, 'p') }.to change { empty_board.grid[bottom_row][0] }.from(nil).to('p')
       end
     end
     context 'when the board is full' do
 
       it 'throws an error when adding another piece' do
-        expect { full_board.drop_piece(0, 'X') }.to raise_error(ArgumentError)
+        expect { full_board.drop_piece(0, 'p') }.to raise_error(ArgumentError)
       end
     end
     context 'when the column is partially full' do
 
       it 'stacks a game piece on top of an existing piece' do
-        expect {partially_full_board.drop_piece(0, 'X') }.to change { partially_full_board.grid[bottom_row - 1][0] }.from(nil).to('X')
+        expect {partially_full_board.drop_piece(0, 'p') }.to change { partially_full_board.grid[bottom_row - 1][0] }.from(nil).to('p')
       end
     end
   end
@@ -111,14 +111,14 @@ describe Board do
       
       it 'returns the piece X' do
         result = full_board.piece_at(0, 0) do
-        expect(result).to eq('X')
+        expect(result).to eq('p')
         end
       end
     end
     context 'when the board is partially full with X and O pieces' do
       
       it 'returns O when looking at a position with an O piece' do
-        expect(partially_full_board.piece_at(5, 2)).to eq('O')
+        expect(partially_full_board.piece_at(5, 2)).to eq('y')
       end
     end
     context 'when the position is invalid' do
@@ -146,7 +146,7 @@ describe Board do
       context 'when the board has a horizontal win from bottom row, first column' do
         let(:board) { empty_board }
         before do
-          4.times { |index| board.grid[bottom_row][index] = 'X' }
+          4.times { |index| board.grid[bottom_row][index] = 'p' }
         end
 
         it 'returns true' do
@@ -156,7 +156,7 @@ describe Board do
       context 'when the board has a horizontal win from top row, last column' do
         let(:board) { empty_board }
         before do
-          (1..4).each { |index| board.grid[top_row][index] = 'X' }
+          (1..4).each { |index| board.grid[top_row][index] = 'p' }
         end
 
         it 'returns true' do
@@ -166,7 +166,7 @@ describe Board do
       context 'when the board has a diagonal lower left win' do
         let(:board) { empty_board }
         before do
-          (0..3).each { |index| board.grid[bottom_row - index][index] = 'O' }
+          (0..3).each { |index| board.grid[bottom_row - index][index] = 'y' }
         end
 
         it 'returns true' do
@@ -176,7 +176,7 @@ describe Board do
       context 'when the board has a diagonal lower right win' do
         let(:board) { empty_board }
         before do
-          (0..3).each { |index| board.grid[2 + index][3 + index] = 'X' }
+          (0..3).each { |index| board.grid[2 + index][3 + index] = 'p' }
         end
 
         it 'returns true' do
@@ -199,15 +199,24 @@ describe Board do
       context 'when the board is partially full without a winner' do
         let(:no_winner_board) do
           no_winner_board = described_class.new
-          no_winner_board.grid[bottom_row][0] = 'X'
-          no_winner_board.grid[bottom_row][1] = 'O'
-          no_winner_board.grid[bottom_row][2] = 'O'
+          no_winner_board.grid[bottom_row][0] = 'p'
+          no_winner_board.grid[bottom_row][1] = 'y'
+          no_winner_board.grid[bottom_row][2] = 'y'
           no_winner_board
         end
 
         it 'returns false' do
           expect(no_winner_board.game_over?(2)).to be false
         end
+      end
+    end
+  end
+
+    describe '#winner?' do
+    context "when there's a winner" do
+      it 'returns true in the public interface' do
+        partially_full_board.grid[bottom_row] = ['p', 'p', 'p', 'p', nil, nil]
+        expect(partially_full_board.winner?(3)).to be true
       end
     end
   end

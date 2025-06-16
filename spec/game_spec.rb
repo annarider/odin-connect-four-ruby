@@ -77,13 +77,28 @@ describe Game do
         expect(running_game.game_over?(0)).to be false
       end
     end
-    context 'when the board is full stalemate' do
+    context 'when the board is full & a stalemate meeting game over' do
       before do
         allow(running_game.board).to receive(:game_over?).and_return(true)
       end
       it 'returns true' do
         expect(running_game.game_over?(0)).to be true
-      end      
+      end
+      it 'announces game over and no winners' do
+        expect(running_game.send(:announce_end)).to eq('Game over! Nobody won.')
+      end
+    end
+    context 'when there is a winner on the board' do
+      before do 
+        allow(running_game.board).to receive(:game_over?).and_return(true)
+      end
+      it 'returns true' do
+        expect(running_game.game_over?(0)).to be true
+      end
+      it 'announces game over and the winner' do
+        running_game.instance_variable_set(:@current_player, '')
+        expect(running_game.send(:announce_winner)).to eq('Game over! Anna is the winner.') 
+      end
     end
   end
 end
