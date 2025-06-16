@@ -15,7 +15,7 @@ describe Board do
     board = described_class.new
     board.grid[bottom_row][0] = 'X' # add 1 piece
     bottom_row.downto(4) { |row| board.grid[row][1] = 'X' } # add 2 pieces
-    bottom_row.downto(0) { |row| board.grid[row][2] = 'O' } # fill column
+    bottom_row.downto(2) { |row| board.grid[row][2] = 'O' } # fill column
     board
   end
   let(:stalemate_board) do
@@ -62,13 +62,18 @@ describe Board do
       end
     end
 
-    context 'when the board is partially full' do
+    context 'when the board has a full second column and all other columns are empty' do
 
+      let(:full_column_board) do 
+        board = described_class.new 
+        bottom_row.downto(0) { |row| board.grid[row][2] = 'O' }
+        board
+      end
       it 'returns true for adding another piece in first column' do
-        expect(partially_full_board.valid_move?(1)).to be true
+        expect(full_column_board.valid_move?(1)).to be true
       end
       it 'returns false for adding a piece in full column' do
-        expect(partially_full_board.valid_move?(2)).to be false
+        expect(full_column_board.valid_move?(2)).to be false
       end
     end
   end
@@ -129,13 +134,13 @@ describe Board do
       context 'when the board is full of X pieces (win in all directions)' do
         
         it 'returns true' do
-          expect(full_board.game_over?(top_row, 2)).to be true
+          expect(full_board.game_over?(2)).to be true
         end
       end
       context 'when the board has a vertical win' do
         
         it 'returns true' do
-          expect(partially_full_board.game_over?(top_row, 2)).to be true
+          expect(partially_full_board.game_over?(2)).to be true
         end
       end
       context 'when the board has a horizontal win from bottom row, first column' do
@@ -145,7 +150,7 @@ describe Board do
         end
 
         it 'returns true' do
-          expect(board.game_over?(bottom_row, 0)).to be true
+          expect(board.game_over?(0)).to be true
         end
       end
       context 'when the board has a horizontal win from top row, last column' do
@@ -155,7 +160,7 @@ describe Board do
         end
 
         it 'returns true' do
-          expect(board.game_over?(top_row, 4)).to be true
+          expect(board.game_over?(4)).to be true
         end
       end
       context 'when the board has a diagonal lower left win' do
@@ -165,7 +170,7 @@ describe Board do
         end
 
         it 'returns true' do
-          expect(board.game_over?(3, 2)).to be true
+          expect(board.game_over?(2)).to be true
         end
       end
       context 'when the board has a diagonal lower right win' do
@@ -175,12 +180,12 @@ describe Board do
         end
 
         it 'returns true' do
-          expect(board.game_over?(2, 3)).to be true
+          expect(board.game_over?(3)).to be true
         end
       end
       context 'when the board is full and a stalemate' do
         it 'returns true' do
-          expect(stalemate_board.game_over?(top_row, 0)).to be true
+          expect(stalemate_board.game_over?(0)).to be true
         end
       end
     end
@@ -188,7 +193,7 @@ describe Board do
       context 'when the board is empty' do
 
         it 'returns false' do
-          expect(empty_board.game_over?(bottom_row, 0)).to be false
+          expect(empty_board.game_over?(0)).to be false
         end
       end
       context 'when the board is partially full without a winner' do
@@ -201,7 +206,7 @@ describe Board do
         end
 
         it 'returns false' do
-          expect(no_winner_board.game_over?(bottom_row, 2)).to be false
+          expect(no_winner_board.game_over?(2)).to be false
         end
       end
     end

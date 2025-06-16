@@ -66,11 +66,24 @@ describe Game do
     end
   end
 
-  describe '#check_game_over' do
+  describe '#game_over?' do
     context 'when a new game starts' do
       it 'returns false' do
-        expect(new_game.check_game_over).to be false
+        expect(new_game.game_over?(0)).to be false
       end
+    end
+    context "when a running game doesn't meet game over conditions" do
+      it 'returns false' do
+        expect(running_game.game_over?(0)).to be false
+      end
+    end
+    context 'when the board is full stalemate' do
+      before do
+        allow(running_game.board).to receive(:game_over?).and_return(true)
+      end
+      it 'returns true' do
+        expect(running_game.game_over?(0)).to be true
+      end      
     end
   end
 end

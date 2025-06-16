@@ -40,8 +40,8 @@ class Board
     grid[row][column]
   end
 
-  def game_over?(row, column)
-    winner?(row, column) || full?
+  def game_over?(column)
+    winner?(column) || full?
   end
 
   private
@@ -58,7 +58,10 @@ class Board
     row.between?(0, ROWS - 1)
   end
 
-  def winner?(row, column)
+  def winner?(column)
+    row = find_highest_piece_row(column)
+    return false unless row && valid_row?(row)
+
     piece = grid[row][column]
     return false if piece.nil?
 
@@ -72,6 +75,19 @@ class Board
     grid.all? { |row| row.none?(&:nil?) }
   end
   
+  def find_highest_piece_row(column)
+    grid.each_with_index do |row, row_index|
+      return row_index unless row[column].nil?
+    end
+    nil
+  end
+
+  def empty_column?(column)
+    grid.each do |row|
+      row.each_with_index { |cell, index| !cell.nil? && index == column }
+    end
+  end
+
   def horizontal_win?(row, column, piece)
     line = build_line(row, column, 0, 1)
     four_in_a_row?(line, piece)

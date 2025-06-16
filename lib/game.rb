@@ -44,15 +44,15 @@ class Game
     column = choose_column
     board.drop_piece(column, current_player.symbol)
     Interface.show(board.grid)
-    if check_game_over
+    if game_over?(column)
       nil
     else
       switch_turns
     end
   end
   
-  def check_game_over
-    false
+  def game_over?(column)
+    board.game_over?(column)
   end
 
   def switch_turns
