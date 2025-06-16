@@ -46,6 +46,10 @@ class Game
     Interface.show(board.grid)
     switch_turns
   end
+  
+  def check_game_over
+    false
+  end
 
   def switch_turns
     if current_player_index == 0 
@@ -66,9 +70,5 @@ class Game
   def choose_column
     column_input = Interface.request_column
     column_input - 1 # convert to 0-based array
-  end
-
-  def check_game_over
-    
   end
 end

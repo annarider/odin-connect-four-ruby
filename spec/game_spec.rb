@@ -66,4 +66,12 @@ describe Game do
       end
     end
   end
+
+  describe '#check_game_over' do
+    context 'when a new game starts' do
+      it 'returns false' do
+        expect(new_game.check_game_over).to be false
+      end
+    end
+  end
 end
