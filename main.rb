@@ -8,10 +8,7 @@ require_relative 'lib/game'
 loop do
   game = Game.new
   game.start
-  loop do
-    game.play_turn
-    break if game.end_game?
-  end
+  game.play
   puts 'Play again? Enter y for yes (y): '
   break unless gets.chomp.downcase == 'y'
 end

@@ -39,12 +39,25 @@ class Game
     @players[current_player_index]
   end
 
+  def play
+    loop do
+      column = play_turn
+      if game.end_game?(column)
+        game.handle_game_end(column, current_player.name)
+        break
+      else
+        switch_turns
+      end  
+    end  
+  end
+
   def play_turn
     current_player = players[current_player_index] 
     Interface.announce_turn(current_player.name)
     column = choose_column
     board.drop_piece(column, current_player.symbol)
     Interface.show(board.grid)
+    column
   end  
 
   def end_game?(column)
