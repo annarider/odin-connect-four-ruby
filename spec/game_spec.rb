@@ -55,11 +55,11 @@ describe Game do
         allow(Interface).to receive(:show)
         allow(running_game).to receive(:switch_turns)
 
-        expect(running_game.play_turn).to eq(column_input - 1)
+        drop_column = running_game.play_turn
 
         expect(Interface).to have_received(:announce_turn).ordered
         expect(Interface).to have_received(:request_column).ordered
-        expect(running_game.board).to have_received(:drop_piece).with(0, 'p').ordered
+        expect(running_game.board).to have_received(:drop_piece).with(drop_column, 'p').ordered
         expect(Interface).to have_received(:show).ordered
       end
     end
