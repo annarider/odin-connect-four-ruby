@@ -55,11 +55,22 @@ class Game
     current_player = players[current_player_index]
     Interface.announce_turn(current_player.name)
     column = pick_column
-    column = pick_column_again until board.valid_move?(column)
     board.drop_piece(column, current_player.symbol)
     Interface.show(board.grid)
     column
   end
+
+  def pick_column
+    column = nil
+    loop do
+      column = Interface.request_column
+      break if board.valid_move?(column)
+      Interface.request_column_again
+    end
+    column - 1 # convert to 0-based array
+  end
+
+
 
   def end_game?(column)
     board.game_over?(column)
@@ -79,16 +90,6 @@ class Game
     players_data.each do |name, symbol|
       @players << Player.new(name, symbol)
     end
-  end
-
-  def pick_column
-    column_input = Interface.request_column
-    column_input - 1 # convert to 0-based array
-  end
-
-  def pick_column_again
-    column_input = Interface.request_column_again
-    column_input - 1
   end
 
   def handle_game_end(column, name)

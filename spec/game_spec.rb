@@ -65,6 +65,26 @@ describe Game do
     end
   end
 
+  describe '#pick_column' do
+    context 'when the column is full' do
+      let(:invalid_column_input) { 1 }
+      let(:column_input) { 2 }
+      before do
+        running_game.board.grid.each { |row| row[0] = 'p' } 
+      end
+      it 'handles checking and handling invalid full column' do
+        allow(Interface).to receive(:request_column).and_return(invalid_column_input, invalid_column_input, column_input)
+        allow(running_game.board).to receive(:valid_move?).and_return(false, false, true)
+        allow(Interface).to receive(:request_column_again)
+      
+        result = running_game.pick_column
+        
+        expect(Interface).to have_received(:request_column_again).twice
+        expect(result).to eq(column_input - 1)
+      end
+    end   
+  end
+ 
   describe '#end_game?' do
     context 'when a new game starts' do
       it 'returns false' do

@@ -51,8 +51,7 @@ module Interface
   end
 
   def self.request_column_again
-    puts '❌ Invalid column number.'
-    request_column
+    puts '❌ Invalid column number. Please pick again.'
   end
 
   def self.request_name

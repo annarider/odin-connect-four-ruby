@@ -76,16 +76,12 @@ class Board
   end
 
   def find_highest_piece_row(column)
+    return 0 unless grid[0][column].nil? # top row is full
+
     grid.each_with_index do |row, row_index|
       return row_index unless row[column].nil?
     end
-    nil
-  end
-
-  def empty_column?(column)
-    grid.each do |row|
-      row.each_with_index { |cell, index| !cell.nil? && index == column }
-    end
+    nil # handle bottom row (column is empty)
   end
 
   def horizontal_win?(row, column, piece)
