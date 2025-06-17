@@ -86,6 +86,11 @@ class Game
     column_input - 1 # convert to 0-based array
   end
 
+  def pick_column_again
+    column_input = Interface.request_column_again
+    column_input - 1
+  end
+
   def handle_game_end(column, name)
     if board.winner?(column)
       announce_winner(name)

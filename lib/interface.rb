@@ -15,7 +15,8 @@ module Interface
     puts <<~WELCOME
       🔴🔴🔴🔴 Welcome to Connect Four. You will pick a column to drop 
       game pieces into. The first person to reach 4 pieces-
-      horizontally, vertically, or diagonally-in a row wins. 
+      horizontally, vertically, or diagonally-in a row wins.
+      Pick a column to drop a piece into from 1 to 7.
     WELCOME
   end
 
@@ -44,13 +45,12 @@ module Interface
   def self.request_column
     puts <<~MESSAGE
     🔮 Which column do you want drop a piece into?
-      Pick from 1 to 7.
       MESSAGE
       column = gets.chomp.delete(' ').to_i
-      valid_column?(column) ? column : pick_column_again(column)
+      valid_column?(column) ? column : request_column_again
   end
 
-  def self.pick_column_again(input)
+  def self.request_column_again
     puts '❌ Invalid column number.'
     request_column
   end
@@ -71,7 +71,7 @@ module Interface
     puts "What color do you want? 🔴 🔵 🟡 🟣"
     puts "Type #{COLORS.split.join('  ')}"
     symbol = gets.chomp.delete(' ')
-    valid_color?(symbol) ? symbol : pick_color_again(symbol)
+    valid_color?(symbol) ? symbol : request_color_again
   end
 
   def self.valid_color?(symbol)
@@ -93,7 +93,7 @@ module Interface
     end
   end
 
-  def self.pick_color_again(input)
+  def self.request_color_again
     puts '❌ Invalid symbol color.'
     request_symbol
   end
