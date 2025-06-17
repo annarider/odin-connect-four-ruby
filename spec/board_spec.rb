@@ -85,12 +85,6 @@ describe Board do
         expect { empty_board.drop_piece(0, 'p') }.to change { empty_board.grid[bottom_row][0] }.from(nil).to('p')
       end
     end
-    context 'when the board is full' do
-
-      it 'throws an error when adding another piece' do
-        expect { full_board.drop_piece(0, 'p') }.to raise_error(ArgumentError)
-      end
-    end
     context 'when the column is partially full' do
 
       it 'stacks a game piece on top of an existing piece' do

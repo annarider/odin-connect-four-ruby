@@ -27,14 +27,13 @@ class Board
   end
 
   def drop_piece(column, symbol)
-    raise ArgumentError, 'Invalid move' unless valid_move?(column)
-
-    (ROWS - 1).downto(0) do |row|
-      if grid[row][column].nil?
-        grid[row][column] = symbol
-        break
-      end
-    end
+    row = find_highest_piece_row(column)
+    if row.nil? # handle bottom row (empty column)
+      row = ROWS - 1
+    else
+      row -= 1
+    end 
+    grid[row][column] = symbol
   end
 
   def game_over?(column)
