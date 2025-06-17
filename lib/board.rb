@@ -37,12 +37,6 @@ class Board
     end
   end
 
-  def piece_at(row, column)
-    raise ArgumentError, 'Invalid position' unless valid_position?(row, column)
-
-    grid[row][column]
-  end
-
   def game_over?(column)
     winner?(column) || full?
   end

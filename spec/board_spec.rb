@@ -99,36 +99,6 @@ describe Board do
     end
   end
 
-  describe '#piece_at' do
-    context 'when the board is empty' do
-      
-      it "returns nil because there's no piece" do
-        result = empty_board.piece_at(0, 0)
-        expect(result).to be_nil
-      end
-    end
-    context 'when the board is full of X pieces' do
-      
-      it 'returns the piece X' do
-        result = full_board.piece_at(0, 0) do
-        expect(result).to eq('p')
-        end
-      end
-    end
-    context 'when the board is partially full with X and O pieces' do
-      
-      it 'returns O when looking at a position with an O piece' do
-        expect(partially_full_board.piece_at(5, 2)).to eq('y')
-      end
-    end
-    context 'when the position is invalid' do
-      
-      it 'raises an error' do
-        expect { empty_board.piece_at(-1, 0) }.to raise_error(ArgumentError)
-      end
-    end
-  end
-
   describe '#game_over?' do
     context 'scenarios where game_over? is true' do
       context 'when the board is full of X pieces (win in all directions)' do
