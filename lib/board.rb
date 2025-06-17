@@ -32,7 +32,7 @@ class Board
       row = ROWS - 1
     else
       row -= 1
-    end 
+    end
     grid[row][column] = symbol
   end
 

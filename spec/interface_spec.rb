@@ -10,7 +10,7 @@ describe Interface do
     context 'when game greets the players' do
       it "should request and return the players' info" do
         allow(Interface).to receive(:gets).and_return('Anna', 'p', 'Alex', 'y')
-        expect(Interface.request_players_data).to eq({'Anna' => 'p', 'Alex' => 'y'})
+        expect(Interface.request_players_data).to eq({ 'Anna' => 'p', 'Alex' => 'y' })
       end
     end
   end

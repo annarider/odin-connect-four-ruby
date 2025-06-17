@@ -88,7 +88,7 @@ describe Game do
       end
     end
     context 'when there is a winner on the board' do
-      before do 
+      before do
         allow(running_game.board).to receive(:game_over?).and_return(true)
       end
       it 'returns true' do
@@ -96,7 +96,7 @@ describe Game do
       end
       it 'announces game over and the winner' do
         running_game.instance_variable_set(:@current_player, 'Anna')
-        expect { running_game.send(:announce_winner, 'Anna') }.to output("Game over! Anna won.\n").to_stdout 
+        expect { running_game.send(:announce_winner, 'Anna') }.to output("Game over! Anna won.\n").to_stdout
       end
     end
   end

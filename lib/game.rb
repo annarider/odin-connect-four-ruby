@@ -11,8 +11,8 @@ require_relative 'player'
 # objects, switching player
 # turns, checking for game over
 # and win conditions, etc.
-# 
-# Game doesn't handle the 
+#
+# Game doesn't handle the
 # game loop. That's taken
 # care of in the main
 # execution.
@@ -28,7 +28,7 @@ class Game
     @current_player_index = 0
     @board = Board.new
   end
-  
+
   def start
     Interface.welcome
     create_players(Interface.request_players_data)
@@ -47,40 +47,40 @@ class Game
         break
       else
         switch_turns
-      end  
-    end  
+      end
+    end
   end
 
   def play_turn
-    current_player = players[current_player_index] 
+    current_player = players[current_player_index]
     Interface.announce_turn(current_player.name)
-    column = pick_column 
-    column = pick_column_again until board.valid_move?(column) 
+    column = pick_column
+    column = pick_column_again until board.valid_move?(column)
     board.drop_piece(column, current_player.symbol)
     Interface.show(board.grid)
     column
-  end  
+  end
 
   def end_game?(column)
     board.game_over?(column)
-  end  
-  
+  end
+
   def switch_turns
-    if current_player_index == 0 
-      @current_player_index = 1
-    else
-      @current_player_index = 0
-    end  
-  end  
-  
+    @current_player_index = if current_player_index.zero?
+                              1
+                            else
+                              0
+                            end
+  end
+
   private
-  
+
   def create_players(players_data)
     players_data.each do |name, symbol|
       @players << Player.new(name, symbol)
     end
   end
-  
+
   def pick_column
     column_input = Interface.request_column
     column_input - 1 # convert to 0-based array

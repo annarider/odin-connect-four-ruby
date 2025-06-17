@@ -11,7 +11,7 @@ describe Board do
     6.times { |row| 7.times { |column| board.grid[row][column] = 'p' } }
     board
   end
-  let(:partially_full_board) do 
+  let(:partially_full_board) do
     board = described_class.new
     board.grid[bottom_row][0] = 'p' # add 1 piece
     bottom_row.downto(4) { |row| board.grid[row][1] = 'p' } # add 2 pieces
@@ -21,8 +21,8 @@ describe Board do
   let(:stalemate_board) do
     board = described_class.new
     board.grid = board.grid.map.with_index do |row, row_index|
-      row.map.with_index do |column, column_index|
-        (row_index + column_index).even? ? 'y' : 'p' 
+      row.map.with_index do |_column, column_index|
+        (row_index + column_index).even? ? 'y' : 'p'
       end
     end
     board
@@ -37,7 +37,6 @@ describe Board do
 
   describe '#valid_move?' do
     context 'when the board is empty' do
-
       it 'returns true for dropping into first column' do
         expect(empty_board.valid_move?(0)).to be true
       end
@@ -56,16 +55,14 @@ describe Board do
     end
 
     context 'when the board is full' do
-
       it 'returns false for adding another piece' do
         expect(full_board.valid_move?(0)).to be false
       end
     end
 
     context 'when the board has a full second column and all other columns are empty' do
-
-      let(:full_column_board) do 
-        board = described_class.new 
+      let(:full_column_board) do
+        board = described_class.new
         bottom_row.downto(0) { |row| board.grid[row][2] = 'y' }
         board
       end
@@ -80,15 +77,15 @@ describe Board do
 
   describe '#drop_piece' do
     context 'when the board is empty' do
-
       it 'places the piece at the bottom row' do
         expect { empty_board.drop_piece(0, 'p') }.to change { empty_board.grid[bottom_row][0] }.from(nil).to('p')
       end
     end
     context 'when the column is partially full' do
-
       it 'stacks a game piece on top of an existing piece' do
-        expect {partially_full_board.drop_piece(0, 'p') }.to change { partially_full_board.grid[bottom_row - 1][0] }.from(nil).to('p')
+        expect { partially_full_board.drop_piece(0, 'p') }.to change {
+          partially_full_board.grid[bottom_row - 1][0]
+        }.from(nil).to('p')
       end
     end
   end
@@ -96,13 +93,11 @@ describe Board do
   describe '#game_over?' do
     context 'scenarios where game_over? is true' do
       context 'when the board is full of X pieces (win in all directions)' do
-        
         it 'returns true' do
           expect(full_board.game_over?(2)).to be true
         end
       end
       context 'when the board has a vertical win' do
-        
         it 'returns true' do
           expect(partially_full_board.game_over?(2)).to be true
         end
@@ -155,7 +150,6 @@ describe Board do
     end
     context 'scenarios where game_over? is false' do
       context 'when the board is empty' do
-
         it 'returns false' do
           expect(empty_board.game_over?(0)).to be false
         end
@@ -176,7 +170,7 @@ describe Board do
     end
   end
 
-    describe '#winner?' do
+  describe '#winner?' do
     context "when there's a winner" do
       it 'returns true in the public interface' do
         partially_full_board.grid[bottom_row] = ['p', 'p', 'p', 'p', nil, nil]
