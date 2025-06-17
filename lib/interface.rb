@@ -49,6 +49,11 @@ module Interface
       column = gets.chomp.delete(' ').to_i
       valid_column?(column) ? column : pick_column_again(column)
   end
+
+  def self.pick_column_again(input)
+    puts '❌ Invalid column number.'
+    request_column
+  end
     
   private
   
@@ -91,10 +96,5 @@ module Interface
   def self.pick_color_again(input)
     puts '❌ Invalid symbol color.'
     request_symbol
-  end
-  
-  def self.pick_column_again(input)
-    puts '❌ Invalid column number.'
-    request_column
   end
 end

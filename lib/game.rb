@@ -54,7 +54,8 @@ class Game
   def play_turn
     current_player = players[current_player_index] 
     Interface.announce_turn(current_player.name)
-    column = choose_column
+    column = pick_column 
+    column = pick_column_again until board.valid_move?(column) 
     board.drop_piece(column, current_player.symbol)
     Interface.show(board.grid)
     column
@@ -80,7 +81,7 @@ class Game
     end
   end
   
-  def choose_column
+  def pick_column
     column_input = Interface.request_column
     column_input - 1 # convert to 0-based array
   end
