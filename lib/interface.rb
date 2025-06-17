@@ -50,7 +50,7 @@ module Interface
     valid_column?(column) ? column : request_column_again
   end
 
-  def self.request_column_again
+  def self.display_invalid_column_message
     puts '❌ Invalid column number. Please pick again.'
   end
 

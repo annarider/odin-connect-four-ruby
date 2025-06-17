@@ -61,13 +61,15 @@ class Game
   end
 
   def pick_column
-    column = nil
+    converted_column = nil
     loop do
       column = Interface.request_column
-      break if board.valid_move?(column)
-      Interface.request_column_again
+      converted_column = column - 1 # convert to 0-based array
+      break if board.valid_move?(converted_column)
+
+      Interface.display_invalid_column_message
     end
-    column - 1 # convert to 0-based array
+    converted_column 
   end
 
 
